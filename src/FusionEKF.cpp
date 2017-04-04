@@ -89,8 +89,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             ekf_.x_ <<
                     measurement_pack.raw_measurements_.coeff(0),
                     measurement_pack.raw_measurements_.coeff(1),
-                    measurement_pack.raw_measurements_.coeff(2),
-                    measurement_pack.raw_measurements_.coeff(3);
+                    0,
+                    0;
             cout << "LASER" << endl;
             cout << ekf_.x_ << endl;
         }
@@ -146,6 +146,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     }
 
     // print the output
-    cout << "x_ = " << ekf_.x_ << endl;
-    cout << "P_ = " << ekf_.P_ << endl;
+//    cout << "x_ = " << ekf_.x_ << endl;
+//    cout << "P_ = " << ekf_.P_ << endl;
 }
