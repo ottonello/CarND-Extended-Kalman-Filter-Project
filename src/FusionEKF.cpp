@@ -32,7 +32,7 @@ FusionEKF::FusionEKF() {
             0, 0, 0.09;
 
     H_laser_ << 1, 0, 0, 0,
-                0, 1, 0, 0;
+            0, 1, 0, 0;
 }
 
 /**
@@ -92,10 +92,10 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
                     0,
                     0;
             cout << "LASER" << endl;
-            cout << ekf_.x_ << endl;
         }
 
         // done initializing, no need to predict or update
+        previous_timestamp_ = measurement_pack.timestamp_;
         is_initialized_ = true;
         return;
     }
@@ -107,25 +107,26 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     double dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;    //dt - expressed in seconds
     previous_timestamp_ = measurement_pack.timestamp_;
-
     ekf_.F_(0, 2) = dt;
     ekf_.F_(1, 3) = dt;
 
-    // TODO move to FusionEKF definition?
-    float noise_ax = 9;
-    float noise_ay = 9;
+    if (dt > 0) {
+        // TODO move to FusionEKF definition?
+        float noise_ax = 9;
+        float noise_ay = 9;
 
-    double dt4 = std::pow(dt, 4) / 4;
-    double dt3 = std::pow(dt, 3) / 2;
-    double dt2 = std::pow(dt, 2);
+        double dt4 = std::pow(dt, 4) / 4;
+        double dt3 = std::pow(dt, 3) / 2;
+        double dt2 = std::pow(dt, 2);
 
-    ekf_.Q_ <<
-            dt4 * noise_ax, 0, dt3 * noise_ax, 0,
-            0, dt4 * noise_ay, 0, dt3 * noise_ay,
-            dt3 * noise_ax, 0, dt2 * noise_ax, 0,
-            0, dt3 * noise_ay, 0, dt2 * noise_ay;
+        ekf_.Q_ <<
+                dt4 * noise_ax, 0, dt3 * noise_ax, 0,
+                0, dt4 * noise_ay, 0, dt3 * noise_ay,
+                dt3 * noise_ax, 0, dt2 * noise_ax, 0,
+                0, dt3 * noise_ay, 0, dt2 * noise_ay;
 
-    ekf_.Predict();
+        ekf_.Predict();
+    }
 
     /*****************************************************************************
      *  Update
