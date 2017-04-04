@@ -1,5 +1,7 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
+static const double MIN_VALUE = 1e-15;
+
 #include "Eigen/Dense"
 
 class KalmanFilter {
