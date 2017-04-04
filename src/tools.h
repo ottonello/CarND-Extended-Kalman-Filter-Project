@@ -1,5 +1,7 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
+static const double JACOBIAN_MIN_DIVISOR = 0.00001;
+
 #include <vector>
 #include "Eigen/Dense"
 

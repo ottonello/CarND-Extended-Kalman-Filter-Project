@@ -1,6 +1,6 @@
 #ifndef KALMAN_FILTER_H_
 #define KALMAN_FILTER_H_
-static const double MIN_VALUE = 1e-15;
+static const double MIN_VALUE = 1e-4;
 
 #include "Eigen/Dense"
 
@@ -67,6 +67,8 @@ public:
   void UpdateEKF(const Eigen::VectorXd &z);
 
     void DoUpdate(const Eigen::VectorXd &z, const Eigen::VectorXd &z_pred);
+
+    bool simplified;
 };
 
 #endif /* KALMAN_FILTER_H_ */

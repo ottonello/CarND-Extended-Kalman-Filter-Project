@@ -5,7 +5,9 @@ using namespace std;
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
 
-KalmanFilter::KalmanFilter() {}
+KalmanFilter::KalmanFilter() {
+    simplified = true;
+}
 
 KalmanFilter::~KalmanFilter() {}
 
@@ -53,16 +55,22 @@ void KalmanFilter::DoUpdate(const VectorXd &z, const VectorXd &z_pred) {
         y(1) -= 2 * M_PI;
     }
 
-    MatrixXd Ht = this->H_.transpose();
-    MatrixXd S = this->H_ * this->P_ * Ht + this->R_;
+    MatrixXd Ht = H_.transpose();
+    MatrixXd S = H_ * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
-    MatrixXd PHt = this->P_ * Ht;
-    MatrixXd K = PHt * Si;
+    MatrixXd K = P_ * Ht * Si;
 
     //new estimate
-    this->x_ = this->x_ + (K * y);
+    x_ = x_ + (K * y);
 
-    long x_size = this->x_.size();
+    long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
-    this->P_ = (I - K * this->H_) * this->P_;
+
+    if(simplified){
+        P_ = (I - K * H_) * P_;
+    } else{
+        MatrixXd Kt = K.transpose();
+        P_ = P_ - (K * H_ * P_) - (P_ * Ht * Kt) + (K * S * Kt);
+    }
+
 }
