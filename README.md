@@ -28,6 +28,22 @@ Self-Driving Car Engineer Nanodegree Program
 
 ## Results
 
-Output was changed so that it outputs RMSE in the format used by the simulator.
+
+
+
+## Simulator
+Output of the program was changed so that it outputs RMSE in the format used by the simulator.
 The `kalman-tracker.py` which can be used together with the simulator is included.
+
+These are the results as seen on the simulator, with lidar and radar data first:
+
+![Lidar and Radar](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sim_lidar_and_radar.png)
+
+While these are the results using only lidar:
+
+![Lidar Only](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sim_lidar.png)
+
+And only radar:
+
+![Radar Only](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sim_radar.png)
 
