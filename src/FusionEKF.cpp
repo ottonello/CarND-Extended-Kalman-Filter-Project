@@ -107,19 +107,22 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
     double dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;    //dt - expressed in seconds
     previous_timestamp_ = measurement_pack.timestamp_;
+
+    // Update state transition
     ekf_.F_(0, 2) = dt;
     ekf_.F_(1, 3) = dt;
 
     if (dt > 0) {
-        double dt4 = std::pow(dt, 4) / 4;
-        double dt3 = std::pow(dt, 3) / 2;
-        double dt2 = std::pow(dt, 2);
+        // Update covariance matrix
+        double dt2 = dt * dt;
+        double dt3 = dt2 * dt;
+        double dt4 = dt3 * dt;
 
         ekf_.Q_ <<
-                dt4 * noise_ax, 0, dt3 * noise_ax, 0,
-                0, dt4 * noise_ay, 0, dt3 * noise_ay,
-                dt3 * noise_ax, 0, dt2 * noise_ax, 0,
-                0, dt3 * noise_ay, 0, dt2 * noise_ay;
+                dt4 / 4 * noise_ax, 0, dt3 / 2 * noise_ax, 0,
+                0, dt4 / 4 * noise_ay, 0, dt3 / 2 * noise_ay,
+                dt3 / 2 * noise_ax, 0, dt2 * noise_ax, 0,
+                0, dt3 / 2 * noise_ay, 0, dt2 * noise_ay;
 
         ekf_.Predict();
     }
