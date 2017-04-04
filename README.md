@@ -28,12 +28,43 @@ Self-Driving Car Engineer Nanodegree Program
 
 ## Results
 
+Results of running the program on the `sample-laser-radar-measurement-data-1.txt` file should give the following output:
 
+```
+ RMSE
+ 0.0651649
+ 0.0605378
+   0.54319
+  0.544191
+``` 
+
+Results for `sample-laser-radar-measurement-data-2.txt`:
+
+```
+RMSE
+0.185496
+0.190302
+0.476754
+0.804469
+```
+
+## Visualization
+
+A Jupyter notebook for visualization of results is included together with the project. It's going to plot
+ground values vs. predicted values for selected output files.
+
+![Sample 1](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-1.png)
+
+![Sample 2](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-2.png)
 
 
 ## Simulator
 Output of the program was changed so that it outputs RMSE in the format used by the simulator.
 The `kalman-tracker.py` which can be used together with the simulator is included.
+
+These are the graphed measurements and estimates vs ground truth with Lidar and Radar enabled:
+
+![Simulator](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/newplot.png)
 
 These are the results as seen on the simulator, with lidar and radar data first:
 

@@ -48,7 +48,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd &x_state) {
 
     //check division by zero
     if(fabs(c1) < 0.00001){
-        std::cout << "CalculateJacobian () - Error - Division by Zero" << std::endl;
+//        std::cout << "CalculateJacobian () - Error - Division by Zero" << std::endl;
         return Hj;
     }
 
