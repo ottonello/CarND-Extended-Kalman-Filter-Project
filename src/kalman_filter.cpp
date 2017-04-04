@@ -66,9 +66,9 @@ void KalmanFilter::DoUpdate(const VectorXd &z, const VectorXd &z_pred) {
     long x_size = x_.size();
     MatrixXd I = MatrixXd::Identity(x_size, x_size);
 
-    if(simplified){
+    if (simplified) {
         P_ = (I - K * H_) * P_;
-    } else{
+    } else {
         MatrixXd Kt = K.transpose();
         P_ = P_ - (K * H_ * P_) - (P_ * Ht * Kt) + (K * S * Kt);
     }
