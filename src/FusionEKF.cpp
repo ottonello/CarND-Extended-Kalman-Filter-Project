@@ -33,6 +33,9 @@ FusionEKF::FusionEKF() {
 
     H_laser_ << 1, 0, 0, 0,
             0, 1, 0, 0;
+
+    noise_ax = 9.f;
+    noise_ay = 9.f;
 }
 
 /**
@@ -48,7 +51,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
      ****************************************************************************/
     if (!is_initialized_) {
         // first measurement
-        cout << "EKF: " << endl;
+//        cout << "EKF: " << endl;
         ekf_.x_ = VectorXd(4);
         ekf_.x_ << 1, 1, 1, 1;
 
@@ -73,9 +76,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
             double rho = measurement_pack.raw_measurements_.coeff(0);
             double phi = measurement_pack.raw_measurements_.coeff(1);
             double rho_dot = measurement_pack.raw_measurements_.coeff(2);
-            cout << "RADAR" << endl;
 
-            // TODO check initialization of speed
             ekf_.x_ <<
                     rho * cos(phi),
                     rho * sin(phi),
@@ -91,7 +92,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
                     measurement_pack.raw_measurements_.coeff(1),
                     0,
                     0;
-            cout << "LASER" << endl;
         }
 
         // done initializing, no need to predict or update
@@ -111,10 +111,6 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.F_(1, 3) = dt;
 
     if (dt > 0) {
-        // TODO move to FusionEKF definition?
-        float noise_ax = 9;
-        float noise_ay = 9;
-
         double dt4 = std::pow(dt, 4) / 4;
         double dt3 = std::pow(dt, 3) / 2;
         double dt2 = std::pow(dt, 2);
