@@ -38,6 +38,7 @@ Results of running the program on the `sample-laser-radar-measurement-data-1.txt
   0.544191
 ``` 
 
+
 Results for `sample-laser-radar-measurement-data-2.txt`:
 
 ```
@@ -55,8 +56,42 @@ ground values vs. predicted values for selected output files.
 
 ![Sample 1](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-1.png)
 
+It can be noticed there is some overestimation in the shown section:
+
+![Sample 1 Zoom](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-1_zoom.png)
+
+For sample 2, these are the results:
+
 ![Sample 2](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-2.png)
 
+
+## Tweaks 
+
+After changing the x and y noise components from 9 to 25 each, the RMSE for the first sample is significantly lower:
+
+```
+RMSE
+0.0416684
+0.0393652
+ 0.444191
+ 0.471881
+```
+
+The improvement can also be noted in the same highlighted section, where the overestimation is also lower: 
+![Second noise value on sample 1 zoom](https://github.com/ottonello/CarND-Extended-Kalman-Filter-Project/raw/master/out/sample-laser-radar-measurement-data-1_2nd_noise.png)
+
+At the same time, using this value RMSE becomes worse for sample 2, especially when regarding the velocity components:
+
+```
+RMSE
+0.186466
+ 0.19127
+0.523013
+ 1.07051
+```
+
+In practice, the estimation still seems to be very good but given the accuracy requirements I went back to the original
+ values of 9, 9 for the noise in x and y components.
 
 ## Simulator
 Output of the program was changed so that it outputs RMSE in the format used by the simulator.
